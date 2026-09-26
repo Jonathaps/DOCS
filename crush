@@ -1,0 +1,57 @@
+Last login: Sat Sep 26 01:34:26 on ttys004
+~ 
+➜  crush --version
+                            
+    ▄▄▄▄▄▄▄▄    ▄▄▄▄▄▄▄▄    
+  ███████████  ███████████  
+████████████████████████████
+████████████████████████████
+██████████▀██████▀██████████
+██████████ ██████ ██████████
+▀▀██████▄████▄▄████▄██████▀▀
+  ████████████████████████  
+    ████████████████████    
+       ▀▀██████████▀▀       
+           ▀▀▀▀▀▀           
+                            
+crush version v0.96.0
+~ 
+➜  crush dirs     
+Config:  /Users/jonatha/.config/crush
+Data:    /Users/jonatha/.local/share/crush
+Project: /etc/crush
+Configs merge from top to bottom
+~ 
+➜  cat ~/.config/crush/crushrc 
+provider add ollama --name "Ollama (local)" --type ollama --base-url "http://127.0.0.1:11434/v1/" --discover-models true
+model add ollama/qwen2.5-coder:7b --name "Ollama Qwen 2.5 Coder 7B" --context-window 12288 --default-max-tokens 2048
+model add ollama/qwen2.5-coder:1.5b --name "Ollama Qwen 2.5 Coder 1.5B" --context-window 12288 --default-max-tokens 2048
+model large ollama/qwen2.5-coder:7b --max-tokens 2048
+model small ollama/qwen2.5-coder:1.5b --max-tokens 2048
+
+# Language intelligence for Java and JavaScript/TypeScript projects.
+lsp add typescript --command typescript-language-server --args --stdio \
+  --filetypes js --filetypes jsx --filetypes ts --filetypes tsx \
+  --filetypes mjs --filetypes cjs --filetypes mts --filetypes cts \
+  --root-markers package.json --root-markers tsconfig.json --root-markers jsconfig.json \
+  --timeout 30
+lsp add java --command jdtls \
+  --filetypes java \
+  --root-markers pom.xml --root-markers build.gradle --root-markers build.gradle.kts \
+  --root-markers settings.gradle --root-markers settings.gradle.kts \
+  --timeout 60
+
+# Keep the local-model system prompt small. Java/TypeScript/Quarkus skills stay
+# enabled; unrelated global skills remain available to other agents.
+option disable-skill accessibility-compliance
+option disable-skill angular-testing
+option disable-skill documentation-writer
+option disable-skill find-skills
+option disable-skill frontend-design
+option disable-skill vercel-react-best-practices
+option disable-skill crush-config
+~ 
+➜  crush logs --tail 100      
+2026/09/22 03:15:39 INFO  Initializing MCP clients source=github.com/charmbracelet/crush/internal/agent/tools/mcp/init.go:299
+2026/09/22 03:15:59 INFO  ModelProvider called model=Qwen3.8-27B-4bit provider=omlx source=github.com/charmbracelet/crush/internal/agent/agent.go:945
+2026/09/25 03:32:40 INFO  Initializing MCP clients source=github.com/charmbracelet/crush/internal/agent/tools/mcp/init.go:299
